@@ -14,26 +14,46 @@
         return true;
       }
     }
+    async function submit(event){
+      event.preventDefault();
 
-    async function submit(){
       if(passwordsMatch()){
-        const res = await fetch("http://127.0.0.1:3000/api/signup",{
-            method:"POST",
-            body: JSON.stringify({
+        try {
+          const res = await fetch("http://127.0.0.1:3000/api/signup",{
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
                   username: username,
                   password: password
               })
-          })
-        console.log(res)
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            toast.success("Account created successfully!");
+            console.log("User created:", data);
+          } else {
+              const errorData = await res.json();
+            toast.error(`Error: ${errorData.error || 'Unknown error occurred'}`);
+            console.error("Failed to create user:", errorData);
+          }
+        } catch (error) {
+          toast.error("Failed to connect to the server");
+          console.error("Network error:", error);
+        }
       }
     }
 </script>
 
-<section class="bg-gray-50 min-h-screen flex items-center justify-center">
-  <div class="relative h-full w-full bg-white">
+<section class="w-full flex items-center justify-center">
+  <div class="relative h-full w-full">
     <!-- Background -->
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-    
+<div class="absolute top-0 -z-10 h-full w-full"><div class="absolute bottom-auto left-auto -right-14 -top-2 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
+<div class="absolute flex left-96 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
+<div class="absolute bottom-auto left-auto left-96 -top-2 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
+<div class="absolute bottom-auto left-auto right-96 -top-2 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div>
     <div class="relative z-10 flex flex-col items-center mt-12 px-6 mx-auto md:h-screen lg:py-0">
       <div class="w-full bg-white rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0 border border-gray-500">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -79,7 +99,7 @@
             </div>
             <button on:click={submit}
               type="submit"
-              class="w-full text-black border border-gray-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              class="transition w-full text-black border border-[#AD6DF4] hover:bg-[#AD6DF4] hover:text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Submit
             </button>
@@ -91,6 +111,5 @@
       </div>
     </div>
   </div>
+  </div>
 </section>
-
-

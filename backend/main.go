@@ -4,28 +4,18 @@ import(
   "github.com/gofiber/fiber/v2"
   "github.com/gofiber/fiber/v2/middleware/cors"
 
-  "gorm.io/gorm"
   "gorm.io/driver/sqlite"
+  "gorm.io/gorm"
 
-  "fmt"
+  "backend/models"
 )
-
-type User struct{
-  gorm.Model
-  Username    string `json:"username"`
-  Password    string `json:"password"`
-}
 
 func main(){
   db, err := gorm.Open(sqlite.Open("user.db"))
   if err != nil{
     panic("failed to connect to database")
   }
-  var user User
-  db.First(&user)
-  fmt.Println(user)
   app := fiber.New()
-
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
@@ -36,11 +26,12 @@ func main(){
   api := app.Group("/api")
   
   api.Post("/signup",func(c *fiber.Ctx) error {
-      user := new(User)
+      user := new(models.User)
       if err := c.BodyParser(user); err!= nil {
-        return err
+        panic(err)
       }
 
+      db.Create(&user)
       return c.JSON(user)
   })
 
