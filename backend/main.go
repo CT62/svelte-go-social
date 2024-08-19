@@ -8,6 +8,7 @@ import(
   "gorm.io/gorm"
 
   "backend/models"
+  "time"
 )
 
 func main(){
@@ -15,6 +16,7 @@ func main(){
   if err != nil{
     panic("failed to connect to database")
   }
+
   app := fiber.New()
 
 	app.Use(cors.New(cors.Config{
