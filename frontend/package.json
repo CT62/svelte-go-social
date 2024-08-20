@@ -36,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"svelte-french-toast": "^1.2.0"
+		"svelte-french-toast": "^1.2.0",
+		"svelte-motion": "^0.12.2"
 	}
 }

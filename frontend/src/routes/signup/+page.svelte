@@ -1,5 +1,7 @@
     <script>
     import toast, { Toaster } from 'svelte-french-toast';
+    import { fade } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
 
     let username = '';
     let password = '';
@@ -12,6 +14,10 @@
         } else {
             return true;
         }
+    }
+
+    function name(params) {
+      
     }
 
     async function submit(event) {
@@ -33,7 +39,7 @@
                     return data;
                 } else {
                     const errorData = await res.json();
-                    throw new Error(errorData.error || 'Unknown error occurred'); // Reject the promise with an error message
+                    throw new Error(errorData.error || 'Unknown error occurred');
                 }
             });
 
@@ -60,7 +66,7 @@
 
     </div>
     <div class="relative z-10 flex flex-col items-center px-6 mx-auto mt-16 sm:h-auto lg:py-0">
-        <div class="w-full bg-white rounded-lg shadow-xl shadow-[#e7d5fb] sm:max-w-md xl:p-0 border border-gray-500">
+        <div in:fade={{ duration: 400 }} class="w-full bg-white rounded-lg shadow-xl shadow-[#e7d5fb] sm:max-w-md xl:p-0 border border-gray-500">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                     Create an account
@@ -104,7 +110,7 @@
                     </div>
                     <button on:click={submit}
                         type="submit"
-                        class="transition hover:bg-gradient-to-r w-full text-black border border-[#AD6DF4] hover:from-[#AD6DF4] hover:to-green-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        class="transition hover:bg-gradient-to-r w-full text-black border border-[#AD6DF4] hover:from-[#AD6DF4] hover:to-purple-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                     >
                         Submit
                     </button>
