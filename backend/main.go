@@ -8,7 +8,6 @@ import(
   "gorm.io/gorm"
 
   "backend/models"
-  "time"
 )
 
 func main(){
@@ -35,6 +34,10 @@ func main(){
 
       db.Create(&user)
       return c.JSON(user)
+  })
+
+  api.Post("/login",func(c *fiber.Ctx) error{
+
   })
 
   app.Listen(":3000")
